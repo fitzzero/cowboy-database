@@ -28,11 +28,12 @@ model Account {
 }
 
 model Minecraft {
-  id       String @id
-  userId   String @unique
-  name     String
-  skinUrl  String?
-  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String @id @default(cuid())
+  minecraftId   String @unique
+  userId        String @unique
+  name          String
+  skinUrl       String?
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
  
 model Session {

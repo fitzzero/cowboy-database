@@ -23,3 +23,17 @@ export const userFindById = async (id: string) => {
     where: { id },
   })
 }
+
+/**
+ * Find a user by their ID and include their Minecraft profile.
+ * @param id - The ID of the user to find.
+ * @returns The user object if found, otherwise null.
+ */
+export const userWithMinecraftFindById = async (id: string) => {
+  return await prisma.user.findUnique({
+    where: { id },
+    include: {
+      minecraft: true,
+    },
+  })
+}
