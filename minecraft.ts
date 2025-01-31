@@ -106,7 +106,7 @@ export const getMinecraftPublicProfile = async (handle: string) => {
     const profileResponse = await fetch(
       `https://api.mojang.com/users/profiles/minecraft/${handle}`
     )
-    const profileData = await profileResponse.json()
+    const profileData: any = await profileResponse.json()
     const { id } = profileData
     return id as string
   } catch (err: any) {
