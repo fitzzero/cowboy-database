@@ -62,7 +62,7 @@ export const minecraftCreateOrUpdateByName: UserAction<
   const skinUrl = await getMinecraftPublicSkin(minecraftId)
   if (!skinUrl) return resHandler.handle500('Error finding Minecraft skin')
 
-  const image = `https://crafatar.com/avatars/${minecraftId}`
+  const image = `https://mc-heads.net/avatar/${minecraftId}`
 
   let dataNew: Minecraft | undefined = undefined
   if (existing) {
