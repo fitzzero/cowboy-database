@@ -8,7 +8,7 @@ import { prisma } from './prisma'
  * @param id - The ID of the Minecraft record to find.
  * @returns The Minecraft object if found, otherwise null.
  */
-export const findMinecraftById = async (id: string) => {
+export const minecraftFindById = async (id: string) => {
   return await prisma.minecraft.findUnique({
     where: { id },
   })
@@ -19,9 +19,7 @@ export const findMinecraftById = async (id: string) => {
  * @param data - The data for the new Minecraft profile.
  * @returns The created Minecraft object.
  */
-export const createMinecraftProfile = async (
-  data: Prisma.MinecraftCreateInput
-) => {
+export const minecraftCreate = async (data: Prisma.MinecraftCreateInput) => {
   return await prisma.minecraft.create({
     data,
   })
@@ -46,8 +44,8 @@ export const getMinecraftPublicSkin = async (id: string) => {
   if (!skinResponse.ok) {
     throw new Error('Failed to fetch Minecraft skin')
   }
-  const skinData = await skinResponse.json()
-  const base64Decoded = atob(skinData.properties[0].value)
+  const skinData: any = await skinResponse.json()
+  const base64Decoded = atob(skinData?.properties[0].value)
   const skinUrl = JSON.parse(base64Decoded).textures.SKIN.url
   return skinUrl
 }
