@@ -32,6 +32,7 @@ model Minecraft {
   minecraftId   String @unique
   userId        String @unique
   name          String
+  image         String?
   skinUrl       String?
   user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
