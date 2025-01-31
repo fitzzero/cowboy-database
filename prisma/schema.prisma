@@ -26,6 +26,14 @@ model Account {
   @@unique([provider, providerAccountId])
 
 }
+
+model Minecraft {
+  id       String @id
+  userId   String @unique
+  name     String
+  skinUrl  String?
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
  
 model Session {
   id           String   @id @default(cuid())
@@ -44,7 +52,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
- 
+  minecraft     Minecraft?
 }
  
 model VerificationToken {
