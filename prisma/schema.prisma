@@ -8,18 +8,18 @@ generator client {
 }
  
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
+  id                     String  @id @default(cuid())
+  userId                 String  @map("user_id")
+  type                   String
+  provider               String
+  providerAccountId      String  @map("provider_account_id")
+  refresh_token          String? @db.Text
+  access_token           String? @db.Text
+  expires_at             Int?
+  token_type             String?
+  scope                  String?
+  id_token               String? @db.Text
+  session_state          String?
  
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
@@ -28,39 +28,76 @@ model Account {
 }
 
 model Minecraft {
-  id            String @id @default(cuid())
-  minecraftId   String @unique
-  userId        String @unique
-  name          String
-  image         String?
-  skinUrl       String?
-  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                     String @id @default(cuid())
+  minecraftId            String @unique
+  userId                 String @unique
+  name                   String
+  image                  String?
+  skinUrl                String?
+  user                   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stats                  MinecraftStats?
+}
+
+model MinecraftStats {
+  id                     String @id @default(cuid())
+  userId                 String @unique
+  minecraftId            String @unique
+
+  money                  Float
+  onlineTime             Boolean
+
+  foragingLevel          Int
+  foragingXp             Float
+  miningLevel            Int
+  miningXp               Float
+  enchantingLevel        Int
+  enchantingXp           Float
+  farmingLevel           Int
+  farmingXp              Float
+  alchemyLevel           Int
+  alchemyXp              Float
+  defenseLevel           Int
+  defenseXp              Float
+  excavationLevel        Int
+  excavationXp           Float
+  archeryLevel           Int
+  archeryXp              Float
+  fishingLevel           Int
+  fishingXp              Float
+  agilityLevel           Int
+  agilityXp              Float
+
+  user                   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  minecraft              Minecraft @relation(fields: [minecraftId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, minecraftId])
 }
  
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique @map("session_token")
-  userId       String   @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                     String   @id @default(cuid())
+  sessionToken           String   @unique @map("session_token")
+  userId                 String   @map("user_id")
+  expires                DateTime
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 }
  
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  minecraft     Minecraft?
+  id                     String    @id @default(cuid())
+  name                   String?
+  email                  String?   @unique
+  emailVerified          DateTime? @map("email_verified")
+  image                  String?
+  accounts               Account[]
+  sessions               Session[]
+  minecraft              Minecraft?
+  minecraftStats         MinecraftStats?
 }
  
 model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
+  identifier             String
+  token                  String
+  expires                DateTime
  
   @@unique([identifier, token])
 }
