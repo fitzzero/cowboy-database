@@ -1,3 +1,5 @@
+'use server'
+
 import { Prisma } from '@prisma/client'
 import { prisma } from './prisma'
 import { WithId } from './definitions'
@@ -16,5 +18,13 @@ export const minecraftStatsUpdateById = async (
   return await prisma.minecraftStats.update({
     where: { id: data.id },
     data,
+  })
+}
+
+export const minecraftStatsByTopTotalLevel = async (limit: number) => {
+  return await prisma.minecraftStats.findMany({
+    orderBy: { totalLevel: 'desc' },
+    include: { minecraft: true, user: true },
+    take: limit,
   })
 }
