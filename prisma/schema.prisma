@@ -46,6 +46,8 @@ model MinecraftStats {
   money                  Float
   online                 Boolean
 
+  totalLevel             Int
+
   foragingLevel          Int
   foragingXp             Float
   miningLevel            Int
@@ -56,6 +58,8 @@ model MinecraftStats {
   farmingXp              Float
   alchemyLevel           Int
   alchemyXp              Float
+  fightingLevel          Int
+  fightingXp             Float
   defenseLevel           Int
   defenseXp              Float
   excavationLevel        Int
