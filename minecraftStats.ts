@@ -21,6 +21,12 @@ export const minecraftStatsUpdateById = async (
   })
 }
 
+export const minecraftStatsFindByUserId = async (id: string) => {
+  return await prisma.minecraftStats.findFirst({
+    where: { userId: id },
+  })
+}
+
 export const minecraftStatsByTopTotalLevel = async (limit: number) => {
   return await prisma.minecraftStats.findMany({
     orderBy: { totalLevel: 'desc' },
